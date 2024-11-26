@@ -1,7 +1,7 @@
 import path from 'path';
 
 export default ({ env }) => {
-  const client = env('DATABASE_CLIENT', 'sqlite');
+  const client = env('DATABASE_CLIENT', 'mongodb');  // Ensure this is set to 'mongodb'
 
   const connections = {
     mysql: {
@@ -41,6 +41,16 @@ export default ({ env }) => {
         schema: env('DATABASE_SCHEMA', 'public'),
       },
       pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+    },
+    mongodb: {  // MongoDB configuration
+      connection: {
+        host: env('DATABASE_HOST', 'localhost'),
+        port: env.int('DATABASE_PORT', 27017),
+        database: env('DATABASE_NAME', 'strapi'),
+        username: env('DATABASE_USERNAME', ''),
+        password: env('DATABASE_PASSWORD', ''),
+        srv: env.bool('DATABASE_SRV', false), // Set to true for MongoDB Atlas
+      },
     },
     sqlite: {
       connection: {
